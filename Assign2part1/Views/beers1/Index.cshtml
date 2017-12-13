@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Assign2part1.Models.beer>
+
+@{
+    ViewBag.Title = "Beer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Beer</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.brewery.breweryLocation)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.beerName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.beerType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.canOrBottle)
+        </th>
+      
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.brewery.breweryLocation)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.beerName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.beerType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.canOrBottle)
+        </td>
+    </tr>
+}
+
+</table>

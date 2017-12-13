@@ -1,0 +1,51 @@
+﻿@model Assign2part1.Models.beer
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>beer</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.brewery.breweryLocation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.brewery.breweryLocation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.beerName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.beerName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.beerType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.beerType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.canOrBottle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.canOrBottle)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.beerID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

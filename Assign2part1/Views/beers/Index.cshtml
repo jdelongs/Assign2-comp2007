@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Assign2part1.Models.beer>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Beer</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+           Brewery Location
+        </th>
+        <th>
+            Beer Name
+        </th>
+        <th>
+            Beer Type
+        </th>
+        <th>
+            Canned Or Bottled
+        </th>
+        <th>Actions</th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.brewery.breweryLocation)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.beerName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.beerType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.canOrBottle)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.beerID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.beerID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.beerID })
+        </td>
+    </tr>
+}
+
+</table>
