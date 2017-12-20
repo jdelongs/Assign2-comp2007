@@ -9,6 +9,8 @@ namespace Assign2part1.Models
     [Table("brewery")]
     public partial class brewery
     {
+        public brewery brewerys;
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public brewery()
         {
@@ -29,5 +31,10 @@ namespace Assign2part1.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<beer> beers { get; set; }
+
+        public static object ToList()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

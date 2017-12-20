@@ -12,33 +12,50 @@ namespace Assign2part1.Controllers
 {
     public class breweriesController : Controller
     {
-        private StoreModel db = new StoreModel();
+        //old db connection now in EFBreweriesRepository 
+        //private StoreModel db = new StoreModel();
 
-        // GET: breweries
-        public ActionResult Index()
+        //repo link 
+        private IbreweriesRepository db;
+
+        // if no param passed to constuctor use ef repsoitoy & Dbcontext
+        public breweriesController()
         {
-            return View(db.breweries.ToList());
+            this.db = new EFBreweriesRepository();
         }
 
-        // GET: breweries/Details/5
-        public ActionResult Details(int? id)
+        // if mock repo object passed to constuctor used mock interface for unit testing 
+        public breweriesController(IbreweriesRepository smRepo)
+        {
+            this.db = smRepo;
+        }
+        // GET: breweries
+        public ViewResult Index()
+        {
+            return View(db.Breweries.ToList());
+        }
+    
+
+     // GET: breweries/Details/5
+        public ViewResult Details(int? id)
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return View("Error");
             }
-            brewery brewery = db.breweries.Find(id);
+            brewery brewery = db.Breweries.SingleOrDefault(a => a.breweryID == id);
             if (brewery == null)
             {
-                return HttpNotFound();
+                return View("Error");
             }
             return View(brewery);
         }
 
-        // GET: breweries/Create
+      // GET: breweries/Create
         public ActionResult Create()
         {
-            return View();
+            ViewBag.breweryID = new SelectList(db.Breweries, "breweryID");
+            return View("Create");
         }
 
         // POST: breweries/Create
@@ -50,25 +67,29 @@ namespace Assign2part1.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.breweries.Add(brewery);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+              
             }
+            db.Save(brewery);
 
-            return View(brewery);
+            return RedirectToAction("Index");
         }
 
         // GET: breweries/Edit/5
-        public ActionResult Edit(int? id)
+        public ViewResult Edit(int? id)
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return View("Error"); 
+                //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            brewery brewery = db.breweries.Find(id);
+            //new repository code 
+            brewery brewery = db.Breweries.SingleOrDefault(a => a.breweryID == id);
+            //scafold code 
+            //brewery brewery = db.Breweries.Find(id);
             if (brewery == null)
             {
-                return HttpNotFound();
+                return View("Error"); 
+                //return HttpNotFound();
             }
             return View(brewery);
         }
@@ -82,24 +103,29 @@ namespace Assign2part1.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(brewery).State = EntityState.Modified;
-                db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
+            db.Save(brewery); 
             return View(brewery);
         }
 
         // GET: breweries/Delete/5
-        public ActionResult Delete(int? id)
+        public ViewResult Delete(int? id)
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return View("Error"); 
+                //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            brewery brewery = db.breweries.Find(id);
+            //new repository code 
+            brewery brewery = db.Breweries.SingleOrDefault(a => a.breweryID == id);
+            //scafold code 
+            //brewery brewery = db.Breweries.Find(id);
             if (brewery == null)
             {
-                return HttpNotFound();
+                return View("Error"); 
+                //return HttpNotFound();
             }
             return View(brewery);
         }
@@ -109,19 +135,29 @@ namespace Assign2part1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            brewery brewery = db.breweries.Find(id);
-            db.breweries.Remove(brewery);
-            db.SaveChanges();
+
+            //new repository code 
+            brewery brewery = db.Breweries.SingleOrDefault(a => a.breweryID == id);
+            //scafold code 
+            //db.Breweries.Remove(brewery);
+            //db.SaveChanges();
+            //brewery brewery = db.Breweries.Find(id);
+            db.Delete(brewery); 
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
+        public ViewResult DeleteConfirmed(int? id)
         {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
+            throw new NotImplementedException();
         }
+
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if (disposing)
+        //    {
+        //        db.Dispose();
+        //    }
+        //    base.Dispose(disposing);
+        //}
     }
-}
+    }
